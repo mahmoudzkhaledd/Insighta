@@ -1,6 +1,6 @@
 import axios from 'axios';
 import crypto from 'crypto';
-axios.defaults.baseURL = "http://localhost:3001/server/";
+axios.defaults.baseURL = process.env.NODE_URL;
 axios.interceptors.request.use(req => {
     req.headers.set("Cache-Control", "max-age=60");
     const key: string = process.env.API_SECRET ?? "";
