@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UsersAnalysis {
+  id Int @id @default(autoincrement())
+
+  totalUsers Int @default(0)
+
+  lastUpdateWeek  Int @default(1)
+  lastUpdateMonth Int @default(1)
+
+  thisWeekUsers  Int @default(0)
+  lastWeekUsers  Int @default(0)
+  thisMonthUsers Int @default(0)
+  lastMonthUsers Int @default(0)
+}
+
+model Admin {
+  id         String       @id @default(cuid())
+  name       String
+  username   String       @unique
+  email      String
+  password   String
+  phone      String
+  jobTitle   String
+  suspended  Boolean      @default(false)
+  lastActive DateTime?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  packages   Package[]
+  AdminRoles AdminRoles[]
+}
+
+model AdminRoles {
+  id            String      @id @default(cuid())
+  admin         Admin       @relation(fields: [adminId], references: [id])
+  adminId       String
+  role          WebsiteRole @relation(fields: [websiteRoleId], references: [id])
+  websiteRoleId String
+
+  @@unique([adminId, websiteRoleId])
+}
+
+model WebsiteRole {
+  id         String       @id @default(cuid())
+  name       String
+  AdminRoles AdminRoles[]
+}
+
+model User {
+  id            String  @id @default(cuid())
+  name          String
+  email         String  @unique
+  password      String
+  phone         String
+  image         String?
+  emailVerified Boolean @default(false)
+
+  subscription Subscription?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  wallet       Wallet?
+  transactions Transaction[]
+  purchases    Purchases[]
+}
+
+model Wallet {
+  id           String        @id @default(cuid())
+  balance      Decimal       @default(0)
+  totalSpent   Decimal       @default(0)
+  transactions Transaction[]
+
+  userId    String      @unique
+  user      User        @relation(fields: [userId], references: [id])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  purchases Purchases[]
+}
+
+enum TransactionType {
+  withdraw
+  deposit
+  purchase
+}
+
+model Transaction {
+  tran_ref         String          @id
+  merchant_id      Int
+  profile_id       Int
+  cart_id          String
+  cart_description String
+  cart_currency    String
+  cart_amount      String
+  tran_currency    String
+  tran_total       String
+  tran_type        String
+  tran_class       String
+  invoice_id       Int
+  customer_ref     String
+  user             User            @relation(fields: [customer_ref], references: [id])
+  type             TransactionType
+
+  customer_ip              String
+  payment_response_status  String
+  payment_response_code    String
+  payment_response_message String
+  payment_cvv_result       String
+  payment_avs_result       String
+  payment_transaction_time DateTime
+  payment_method           String
+  payment_card_type        String
+  payment_card_scheme      String
+  payment_description      String
+  payment_expiryMonth      Int
+  payment_expiryYear       Int
+  ipn_trace                String
+  wallet                   Wallet   @relation(fields: [walletId], references: [id])
+  walletId                 String
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+model PackageAdvantage {
+  id        String   @id @default(cuid())
+  text      String
+  active    Boolean
+  package   Package  @relation(fields: [packageId], references: [id])
+  packageId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PurchasesType {
+  subscribe
+  renew
+}
+
+model Purchases {
+  id       String        @id @default(cuid())
+  type     PurchasesType
+  user     User          @relation(fields: [userId], references: [id])
+  wallet   Wallet        @relation(fields: [walletId], references: [id])
+  walletId String
+  package  Package       @relation(fields: [packageId], references: [id])
+  amount   Decimal
+
+  userId    String
+  packageId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PackageDuration {
+  monthly
+  yearly
+  forever
+}
+
+model Package {
+  id              String  @id @default(cuid())
+  name            String
+  description     String
+  fullDescription String
+  active          Boolean @default(false)
+  usersCount      Int     @default(0)
+
+  maxWebsites Int @default(0)
+  maxActions  Int @default(0)
+  maxApiKeys  Int @default(0)
+
+  price Float
+
+  afterDiscount Int?
+
+  duration      PackageDuration
+  advantages    PackageAdvantage[]
+  isPopular     Boolean            @default(false)
+  subscriptions Subscription[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  purchases     Purchases[]
+  admin         Admin              @relation(fields: [adminId], references: [id])
+  adminId       String
+}
+
+enum SubscriptionState {
+  pending
+  accepted
+  refused
+}
+
+model Subscription {
+  id                  String            @id @default(cuid())
+  packageId           String
+  package             Package           @relation(fields: [packageId], references: [id])
+  userId              String            @unique
+  user                User              @relation(fields: [userId], references: [id])
+  state               SubscriptionState @default(pending)
+  refusal_reason      String?
+  currentWebsites     Int               @default(0)
+  currentTotalActions Int               @default(0)
+  currentApiKeys      Int               @default(0)
+  renewDate           DateTime
+  duration_days       Int
+  priceToPay          Float
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([userId])
+}
+
+model NotifyEmail {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

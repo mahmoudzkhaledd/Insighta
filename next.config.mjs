@@ -1,4 +1,26 @@
+import nextra from 'nextra';
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "**",
+            }
+        ],
+    },
+    experimental: {
 
-export default nextConfig;
+        serverComponentsExternalPackages: [
+            '@react-email/components',
+            '@react-email/render',
+            '@react-email/tailwind'
+        ]
+    },
+    
+}; 
+const nextraConfigs = nextra({ 
+    theme: 'nextra-theme-docs',
+    themeConfig: './theme.config.jsx',
+});
+export default nextraConfigs(nextConfig);
