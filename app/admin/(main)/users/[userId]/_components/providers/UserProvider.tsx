@@ -7,11 +7,8 @@ const ctx = createContext<UserSchema>({
     id: 'default_id',
     name: 'John Doe',
     email: 'john@example.com',
-    password: 'default_password',
     phone: '123-456-7890',
     emailVerified: false,
-    createdAt: new Date(),
-    updatedAt: new Date()
 });
 export const useUser = () => {
     return useContext(ctx);
