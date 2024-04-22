@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { Switch } from "@/components/ui/switch";
 import AddBalanceToUserModal from "../_components/AddBalanceToUserModal";
 
-export default function page() {
+export default function EditUserPage() {
     const excluded: string[] = [
         'id',
         'image',

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
+import EnterUserAccountCell from "./EnterUserAccountCell";
 export const usersCols: ColumnDef<User>[] = [
     {
         header: "Name",
@@ -63,24 +64,9 @@ export const usersCols: ColumnDef<User>[] = [
         header: "Enter Account",
         enableSorting: true,
         enableHiding: false,
-        cell: (data) => {
-            const [loading, startTrans] = useTransition();
-            const router = useRouter();
-        
-            const handelEnterUserAccount = () => {
-                startTrans(async () => {
-                    const res = await enterUserAccount(data.row.original.id);
-                    if (res.error) {
-                        toast.error(res.error);
-                        return;
-                    }
-                    window.open("/dashboard", "_blank");
-                });
-            };
-            return <Button disabled={loading} loading={loading} title="Enter user account" variant={'outline'} size={'icon'} onClick={handelEnterUserAccount}>
-                <BadgeCheck className="w-5" />
-            </Button>
-        }
+        cell: (data) => (
+            <EnterUserAccountCell data={data} />
+        )
     },
 
 
