@@ -3,7 +3,7 @@ import DashboardSidebar from './_components/DashboardSidebar/DashboardSidebar'
 
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-   
+
     return (
         <>
             <DashboardSidebar className="fixed" />

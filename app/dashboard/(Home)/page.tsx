@@ -10,7 +10,7 @@ export default function DahboardHome() {
             <GreetingComponent />
             <h2 className="font-bold text-xl">
                 You're just a couple steps
-                away from your first user.
+                away from your visit.
             </h2>
             <Frameworks />
         </main>
