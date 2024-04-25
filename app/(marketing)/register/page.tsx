@@ -4,12 +4,7 @@ import RegisterForm from "@/components/Auth/RegisterForm";
 
 
 export default function RegisterPage({ searchParams }: { searchParams: { emailSent: string; } }) {
-  return <ComingSoon 
-    title="Coming Soon"
-    subTitle="Sign up will be available soon when we launch"
-    downTitle="Be the first to know when we launch!"
-    subscribe
-  />;
+  
   return (
     <div className="h-screen w-full flex items-center justify-center">
       <RegisterForm emailSent={searchParams.emailSent} />
