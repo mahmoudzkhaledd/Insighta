@@ -23,8 +23,8 @@ export default function LoginForm() {
     const form = useForm<z.infer<typeof adminLoginSchema>>({
         resolver: zodResolver(adminLoginSchema),
         defaultValues: {
-            username: "mk2002",
-            password: "12345678",
+            username: "",
+            password: "",
         },
     });
     const submitForm = async (values: z.infer<typeof adminLoginSchema>) => {
