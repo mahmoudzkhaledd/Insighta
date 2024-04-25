@@ -46,6 +46,7 @@ export default function AddPackageForm({ pkgUpdate }: { pkgUpdate?: PackageProps
             maxWebsites: pkgUpdate?.maxWebsites ?? 0,
             advantages: pkgUpdate?.advantages ?? [],
             active: pkgUpdate?.active ?? true,
+            maxGraphPoints: pkgUpdate?.maxGraphPoints,
         }
     });
     const fieldArr = useFieldArray({
@@ -227,6 +228,25 @@ export default function AddPackageForm({ pkgUpdate }: { pkgUpdate?: PackageProps
                             </legend>
                             <FormField
                                 control={form.control}
+                                name='maxGraphPoints'
+                                render={({ field }) => (
+                                    <FormItem >
+                                        <FormLabel> Max Graph Points </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={loading}
+                                                onChange={(e) => field.onChange(toNumber(e.target.value))}
+                                                defaultValue={toNumber(field.value) ?? undefined}
+                                                type="number"
+                                                min={0}
+                                                placeholder='0' />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
                                 name='maxWebsites'
                                 render={({ field }) => (
                                     <FormItem >
@@ -278,7 +298,6 @@ export default function AddPackageForm({ pkgUpdate }: { pkgUpdate?: PackageProps
                                                 <FormControl>
                                                     <Input
                                                         disabled={loading}
-
                                                         onChange={(e) => field.onChange(toNumber(e.target.value))}
                                                         defaultValue={toNumber(field.value) ?? 0}
                                                         type="number"

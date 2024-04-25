@@ -3,6 +3,12 @@ import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { ZodError } from "zod";
 
+export function isValidDate(dateString?: string | null) {
+  const dateObject = new Date(dateString ?? "invalid date");
+  const valid = !isNaN(dateObject.getTime()) && dateString === dateObject.toISOString().split('T')[0];
+  return valid ? dateObject : null;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }

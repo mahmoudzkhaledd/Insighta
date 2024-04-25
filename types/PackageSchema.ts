@@ -9,6 +9,7 @@ export const addPackageSchema = z.object({
     description: z.string(),
     fullDescription: z.string().min(1, "This field is required"),
     active: z.boolean(),
+    maxGraphPoints: z.nullable(z.number().min(0)),
     maxWebsites: z.number().min(0),
     maxActions: z.number().min(0),
     maxApiKeys: z.number().min(0),

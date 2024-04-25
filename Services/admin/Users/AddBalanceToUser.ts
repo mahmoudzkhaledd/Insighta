@@ -65,7 +65,6 @@ export const addBalanceToUserAccount = async (values: z.infer<typeof amountSchem
         });
 
     } catch (error: any) {
-        console.log(error);
         const err = extractAxiosError(error);
         return {
             error: err ?? "Unknown error occured, please check the logs.",

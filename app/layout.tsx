@@ -16,6 +16,7 @@ import { SubscriptionProvider } from "@/components/Providers/SubscriptionProvide
 import WarningBar from "@/components/General/WarningBar";
 import Link from "next/link";
 import { siteConfig } from "@/constants/site";
+import Insighta from "@/components/Providers/WebAnalytix";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -86,6 +87,7 @@ export default async function RootLayout({
                     }
                     <div className={cn("h-full", { "mt-8": warning })}>
                       {children}
+                      <Insighta />
                     </div>
                   </OnlineOfflineProvider>
                 </SubscriptionProvider>

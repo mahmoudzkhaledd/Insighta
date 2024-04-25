@@ -5,9 +5,10 @@ import { Lock, Settings } from 'lucide-react';
 import moment from 'moment';
 import Link from 'next/link'
 import React from 'react'
+import RangePicker from './RangePicker';
 
-export default async function WebsiteHeader({ userId, websiteName, url, updatedAt, id, available }:
-  { userId: string; available: boolean, id: string; updatedAt: string; websiteName: string; url: string; }) {
+export default async function WebsiteHeader({ fromLimit, toLimit, userId, websiteName, url, updatedAt, id, available }:
+  { fromLimit: Date, toLimit: Date, userId: string; available: boolean, id: string; updatedAt: string; websiteName: string; url: string; }) {
   const session = await authX();
   return (
     <div className="max-w-6xl w-full mx-auto grid gap-2">
@@ -30,13 +31,17 @@ export default async function WebsiteHeader({ userId, websiteName, url, updatedA
             }
           </div>
         </div>
-        {
-          session?.user.id === userId && <Link href={`/websites/${id}/settings`}>
-            <Button size={'icon'} variant={'outline'}>
-              <Settings />
-            </Button>
-          </Link>
-        }
+        <div className='flex items-center gap-2'>
+          {/* <RangePicker fromDate={fromLimit} toDate={toLimit} /> */}
+          {
+            session?.user.id === userId && <a href={`/websites/${id}/settings`}>
+              <Button size={'icon'} variant={'outline'}>
+                <Settings />
+              </Button>
+            </a>
+          }
+        </div>
+
       </div>
     </div>
   )

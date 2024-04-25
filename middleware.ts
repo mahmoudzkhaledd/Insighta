@@ -18,15 +18,20 @@ const handelApiRoutes = (req: NextRequest) => {
     const pathname = req.nextUrl.pathname;
     if (!pathname.startsWith("/api/server")) return null;
     const secret = req.headers.get("api-secret");
-    if (secret == null) return Response.json({ message: "unauthorized" });
-    const privateKey = process.env.PRIVATE_KEY ?? "";
-    const decryptedData = crypto.privateDecrypt({
-        key: privateKey,
-    }, Buffer.from(secret, 'base64'));
-    if (decryptedData.toString() != process.env.API_SECRET) {
+    if (secret != process.env.API_SECRET) {
         return Response.json({ message: "unauthorized" });
+    } else {
+        return null;
     }
-    return null;
+    // if (secret == null) return Response.json({ message: "unauthorized" });
+    // const privateKey = process.env.PRIVATE_KEY ?? "";
+    // const decryptedData = crypto.privateDecrypt({
+    //     key: privateKey,
+    // }, Buffer.from(secret, 'base64'));
+    // if (decryptedData.toString() != process.env.API_SECRET) {
+    //     return Response.json({ message: "unauthorized" });
+    // }
+    // return null;
 };
 const handelAdminRoutes = async (req: NextRequest) => {
     const user = await authXAdmin();
@@ -69,7 +74,7 @@ export default async (req: NextRequest) => {
         }
         return null;
     }
-    
+
     if (!isLoggedin && !isPublicRoute) {
         return Response.redirect(new URL(notAuthorizedRedirect, route));
     }

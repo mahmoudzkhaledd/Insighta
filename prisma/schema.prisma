@@ -170,10 +170,10 @@ model Package {
   fullDescription String
   active          Boolean @default(false)
   usersCount      Int     @default(0)
-
-  maxWebsites Int @default(0)
-  maxActions  Int @default(0)
-  maxApiKeys  Int @default(0)
+  maxGraphPoints  Int?
+  maxWebsites     Int     @default(0)
+  maxActions      Int     @default(0)
+  maxApiKeys      Int     @default(0)
 
   price Float
 
@@ -217,8 +217,8 @@ model Subscription {
 }
 
 model NotifyEmail {
-  id    Int    @id @default(autoincrement())
-  email String @unique
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
