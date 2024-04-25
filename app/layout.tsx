@@ -90,6 +90,7 @@ export default async function RootLayout({
                       <Insighta exclude={[
                         "/admin",
                         "/admin/:id",
+                        "/websites/662a415e9d7ea63fa7e2d099"
                       ]}/>
                     </div>
                   </OnlineOfflineProvider>
