@@ -87,7 +87,10 @@ export default async function RootLayout({
                     }
                     <div className={cn("h-full", { "mt-8": warning })}>
                       {children}
-                      <Insighta />
+                      <Insighta exclude={[
+                        "/admin",
+                        "/admin/:id",
+                      ]}/>
                     </div>
                   </OnlineOfflineProvider>
                 </SubscriptionProvider>
