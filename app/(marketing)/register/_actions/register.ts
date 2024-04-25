@@ -42,7 +42,7 @@ export const register = async (values: z.infer<typeof registerSchema>, redirectT
                     email,
                     password: hashedPass,
                     name,
-                    emailVerified: session?.user.type == 'admin',
+                    emailVerified: true,
                     phone: phone,
                     wallet: {
                         create: {}
@@ -77,18 +77,18 @@ export const register = async (values: z.infer<typeof registerSchema>, redirectT
             }
 
 
-            const token = await new SignJWT({ id: user.id })
-                .setProtectedHeader({ alg: 'HS256' })
-                .setJti(nanoid())
-                .setIssuedAt()
-                .setExpirationTime(siteConfig.magicLinkExpiration)
-                .sign(new TextEncoder().encode(process.env.AUTHX_SECRET));
-            if (session?.user.type != 'admin') {
-                const sentEmail = await sendVerificationEmail(user.email, user.name, process.env.NODE_ENV == 'development' ? `http://localhost:3000/confirm-email?token=${token}` : `${process.env.URL}/confirm-email?token=${token}`);
-                if (sentEmail.accepted.length == 0 && sentEmail.rejected.length > 0) {
-                    throw new Error(sentEmail.rejected[0].toString());
-                }
-            }
+            // const token = await new SignJWT({ id: user.id })
+            //     .setProtectedHeader({ alg: 'HS256' })
+            //     .setJti(nanoid())
+            //     .setIssuedAt()
+            //     .setExpirationTime(siteConfig.magicLinkExpiration)
+            //     .sign(new TextEncoder().encode(process.env.AUTHX_SECRET));
+            // if (session?.user.type != 'admin') {
+            //     const sentEmail = await sendVerificationEmail(user.email, user.name, process.env.NODE_ENV == 'development' ? `http://localhost:3000/confirm-email?token=${token}` : `${process.env.URL}/confirm-email?token=${token}`);
+            //     if (sentEmail.accepted.length == 0 && sentEmail.rejected.length > 0) {
+            //         throw new Error(sentEmail.rejected[0].toString());
+            //     }
+            // }
 
         });
 
