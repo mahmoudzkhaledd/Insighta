@@ -26,14 +26,6 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
         },
     },
     {
-        header: "Additional Fees",
-        cell(props) {
-            const cartAmount = toNumber(props.row.original.cart_amount) ?? 0;
-            const transTotal = toNumber(props.row.original.tran_total) ?? 0;
-            return <>{(transTotal - cartAmount)} {props.row.original.tran_currency}</>
-        },
-    },
-    {
         header: "Method",
         cell(props) {
 
