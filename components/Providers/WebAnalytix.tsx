@@ -8,7 +8,6 @@ export default function Insighta({ exclude = [] }: { exclude: string[] }) {
     const pathname = usePathname();
 
     const initialized = useRef<string>('');
-    console.log({ match: isUrlMatching(pathname ?? "asd", exclude) });
     const fetchWeb = async () => {
         try {
             const res = await fetch('https://insighta-server.onrender.com/visit',

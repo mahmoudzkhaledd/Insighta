@@ -3,7 +3,7 @@ import React from 'react'
 import Frameworks from './_components/Frameworks'
 import GreetingComponent from './_components/GreetingComponent'
 
-export default function DahboardHome() {
+export default async function DahboardHome() {
 
     return (
         <main className='flex mx-auto flex-col gap-4 p-2 lg:pt-[30px] lg:px-[30px]  '>

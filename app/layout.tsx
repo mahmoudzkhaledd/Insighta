@@ -10,13 +10,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { getWebsiteConfigs } from "@/Services/WebsiteConfigs/GetWebsiteConfigs";
 import WebConfigsProvider from "@/components/Providers/WebConfigsProvider";
 import { setWebsiteConfigs } from "@/constants/websiteConfigs";
-import { cn } from "@/lib/utils";
+import { cn, delay } from "@/lib/utils";
 import { getUserSubscription } from "@/Services/Subscription/GetUserSubscription";
 import { SubscriptionProvider } from "@/components/Providers/SubscriptionProvider";
 import WarningBar from "@/components/General/WarningBar";
 import Link from "next/link";
 import { siteConfig } from "@/constants/site";
 import Insighta from "@/components/Providers/WebAnalytix";
+import { Suspense } from "react";
+import Spinner from "@/components/ui/Spinner copy";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,8 +46,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
+  await delay(5000);
   const session = await authX();
   const configs = await getWebsiteConfigs();
   if (configs == null) {
@@ -91,7 +92,7 @@ export default async function RootLayout({
                         "/admin",
                         "/admin/:id",
                         "/websites/662a415e9d7ea63fa7e2d099"
-                      ]}/>
+                      ]} />
                     </div>
                   </OnlineOfflineProvider>
                 </SubscriptionProvider>
