@@ -46,7 +46,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await delay(5000);
+  
   const session = await authX();
   const configs = await getWebsiteConfigs();
   if (configs == null) {
