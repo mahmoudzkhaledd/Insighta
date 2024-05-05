@@ -17,17 +17,21 @@ import WarningBar from "@/components/General/WarningBar";
 import Link from "next/link";
 import { siteConfig } from "@/constants/site";
 import Insighta from "@/components/Providers/WebAnalytix";
-import { Suspense } from "react";
-import Spinner from "@/components/ui/Spinner copy";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.URL ?? "http://localhost:3000"),
   openGraph: {
+    url: 'https://insighta-snowy.vercel.app',
+    siteName: siteConfig.name,
+    locale: 'en_US',
+    type: 'website',
     images: [
       {
         url: "/images/opengraph-image.jpg",
+        width: 1200,
+        height: 600,
       }
     ],
   },
@@ -46,7 +50,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   const session = await authX();
   const configs = await getWebsiteConfigs();
   if (configs == null) {
