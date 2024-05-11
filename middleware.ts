@@ -42,7 +42,7 @@ const handelAdminRoutes = async (req: NextRequest) => {
 
     if (isAuthRoute) {
         if (isLoggedin) {
-            return Response.redirect(new URL(DEFAULT_REDIRECT, route));
+            return Response.redirect(new URL('/admin', route));
         }
         return null;
     }
