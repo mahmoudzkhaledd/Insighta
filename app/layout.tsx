@@ -17,6 +17,7 @@ import WarningBar from "@/components/General/WarningBar";
 import Link from "next/link";
 import { siteConfig } from "@/constants/site";
 import Insighta from "@/components/Providers/WebAnalytix";
+import AboutFloatingButton from "@/components/General/AboutFloatingButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -92,6 +93,7 @@ export default async function RootLayout({
                     }
                     <div className={cn("h-full", { "mt-8": warning })}>
                       {children}
+                      <AboutFloatingButton />
                       <Insighta exclude={[
                         "/admin",
                         "/admin/:id",
